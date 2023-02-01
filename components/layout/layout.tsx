@@ -4,17 +4,26 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import { m } from "framer-motion";
 import { userNameAtom } from "@/src/atoms/name";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
+import { goBackAtom } from "@/src/atoms/goBack";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const userName = useRecoilValue(userNameAtom);
+  const [, setGoBack] = useRecoilState(goBackAtom);
+  const router = useRouter();
 
-  const isLoggedIn = !!userName;
+  const handleGoToChangeName = () => {
+    // if router as path matches /board/
+    if (router.asPath.match(/\/board\/.*/)) {
+      // set go back to router as path
+      setGoBack(router.asPath);
+    }
+    router.push("/name");
+  };
 
   return (
     <>
@@ -24,9 +33,9 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Link href="/">Alza Storypoint Poker</Link>
             </Typography>
-            <Link href="/name">
-              <Button color="inherit">{"Change username"}</Button>
-            </Link>
+            <Button color="inherit" onClick={handleGoToChangeName}>
+              {"Change username"}
+            </Button>
           </Toolbar>
         </AppBar>
         <Toolbar />
@@ -35,7 +44,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
       >
         <Box sx={(theme) => ({ mt: theme.spacing(2) })}>
           <main>{children}</main>

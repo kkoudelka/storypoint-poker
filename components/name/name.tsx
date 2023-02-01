@@ -8,9 +8,11 @@ import Button from "@mui/material/Button";
 import { useRecoilState } from "recoil";
 import { userNameAtom } from "@/src/atoms/name";
 import { useRouter } from "next/router";
+import { goBackAtom } from "@/src/atoms/goBack";
 
 const NameChanger: React.FC = () => {
   const [userName, setUserName] = useRecoilState(userNameAtom);
+  const [goBackUrl, setGoBack] = useRecoilState(goBackAtom);
 
   const router = useRouter();
 
@@ -27,6 +29,12 @@ const NameChanger: React.FC = () => {
 
   const onSubmit = (data: { name: string }) => {
     setUserName(data.name);
+    if (goBackUrl) {
+      router.push(goBackUrl);
+      setGoBack(null);
+      return;
+    }
+
     router.push("/");
   };
 
@@ -60,7 +68,11 @@ const NameChanger: React.FC = () => {
               validate: (value) => !!value && value.length > 3,
             })}
           />
-          <Button variant="contained" disabled={!!errors.name?.message}>
+          <Button
+            variant="contained"
+            disabled={!!errors.name?.message}
+            type="submit"
+          >
             Save
           </Button>
         </Card>

@@ -31,6 +31,7 @@ const Chart: React.FC<IProps> = ({ votes }) => {
         display: "flex",
         justifyContent: "center",
         height: 480,
+        overflow: "hidden",
       }}
     >
       <VictoryPie

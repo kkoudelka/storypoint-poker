@@ -20,6 +20,9 @@ import { useEffect } from "react";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useRecoilState, useRecoilValue } from "recoil";
 import TabContext from "@mui/lab/TabContext";
+import Head from "next/head";
+import { goBackAtom } from "@/src/atoms/goBack";
+import { useRouter } from "next/router";
 
 interface IProps {
   code: string;
@@ -30,7 +33,9 @@ const BoardCode: NextPage<
 > = ({ code }) => {
   const docRef = doc<BoardData>("boards", code.toString());
   const [selectedValue, setSelectedValue] = useRecoilState(selectedCardState);
+  const [, setGoBack] = useRecoilState(goBackAtom);
   const uNameVal = useRecoilValue(userNameAtom);
+  const router = useRouter();
 
   const [docData] = useDocumentData<BoardData>(docRef);
 
@@ -91,7 +96,9 @@ const BoardCode: NextPage<
   // }, [docData]);
 
   useEffect(() => {
-    if (!uNameVal) return;
+    if (!uNameVal) {
+      return;
+    }
     // add user to board
     addUser();
     return () => {
@@ -100,8 +107,18 @@ const BoardCode: NextPage<
     };
   }, []);
 
+  useEffect(() => {
+    if (!uNameVal) {
+      setGoBack(router.asPath);
+      router.push("/name");
+    }
+  }, [uNameVal]);
+
   return (
     <Layout>
+      <Head>
+        <title>Board</title>
+      </Head>
       <Container maxWidth="xl">
         <Grid container spacing={2}>
           <Grid item xs={12} md={3}>
