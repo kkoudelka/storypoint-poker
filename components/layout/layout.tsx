@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,10 +6,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { m } from "framer-motion";
-import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
-import { goBackAtom } from "@/src/atoms/goBack";
 import Footer from "../footer/footer";
+import { appName } from "@/src/utils";
+import { useRecoilState } from "recoil";
+import { goBackAtom } from "@/src/atoms/goBack";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   const [, setGoBack] = useRecoilState(goBackAtom);
@@ -36,7 +37,7 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
                   component="div"
                   sx={{ textDecoration: "none", color: "white" }}
                 >
-                  Alza Storypoint Poker
+                  {appName}
                 </Typography>
               </Link>
             </Box>

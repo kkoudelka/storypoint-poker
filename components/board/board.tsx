@@ -1,11 +1,11 @@
-import React, { useDeferredValue, useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import { useRecoilValue } from "recoil";
-import { DocumentReference, getDoc, updateDoc } from "firebase/firestore";
-import { BoardData, IVote } from "@/src/types/board.type";
+import { type DocumentReference, updateDoc } from "firebase/firestore";
+import type { BoardData, IVote } from "@/src/types/board.type";
 import options from "@/src/config/options";
 import { userAtom } from "@/src/atoms/user-atom";
 

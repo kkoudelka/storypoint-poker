@@ -48,29 +48,31 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
   };
 
   return (
-    <Fade in={isAdmin} unmountOnExit>
-      <Box
-        sx={(theme) => ({
-          display: "flex",
-          justifyContent: "center",
-          gap: theme.spacing(4),
-          mt: theme.spacing(5),
-        })}
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ color: "white" }}
-          onClick={revealResults}
-          disabled={revealed || votes?.length === 0}
+    <>
+      <Fade in={isAdmin} unmountOnExit>
+        <Box
+          sx={(theme) => ({
+            display: "flex",
+            justifyContent: "center",
+            gap: theme.spacing(4),
+            mt: theme.spacing(5),
+          })}
         >
-          Reveal results
-        </Button>
-        <Button variant="contained" color="error" onClick={reset}>
-          Reset
-        </Button>
-      </Box>
-    </Fade>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ color: "white" }}
+            onClick={revealResults}
+            disabled={revealed || votes?.length === 0}
+          >
+            Reveal results
+          </Button>
+          <Button variant="contained" color="error" onClick={reset}>
+            Reset
+          </Button>
+        </Box>
+      </Fade>
+    </>
   );
 };
 

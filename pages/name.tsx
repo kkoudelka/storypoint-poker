@@ -1,15 +1,14 @@
 import Layout from "@/components/layout/layout";
-import NameChanger from "@/components/name/name";
+import OgMeta from "@/components/meta/og";
+import NameChanger from "@/components/name/name-changer";
+import { appName } from "@/src/utils";
 import Container from "@mui/material/Container";
 import type { NextPage } from "next";
-import Head from "next/head";
 
 const ChangeName: NextPage = () => {
   return (
     <Layout>
-      <Head>
-        <title>Change name</title>
-      </Head>
+      <OgMeta title={`Change name | ${appName}`} />
       <Container maxWidth="sm">
         <NameChanger />
       </Container>

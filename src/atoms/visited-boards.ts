@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { BoardData } from "../types/board.type";
+import { type BoardData } from "../types/board.type";
 
 const { persistAtom } = recoilPersist({ key: "visited-boards" });
 

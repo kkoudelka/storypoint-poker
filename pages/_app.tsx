@@ -1,14 +1,15 @@
 import "@/styles/globals.css";
-
 import type { AppProps } from "next/app";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/src/config/theme";
 import { LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
+import Script from "next/script";
 import { appName } from "@/src/utils";
 import Head from "next/head";
 import UserContext from "@/components/user/user-context";
 import { CssBaseline } from "@mui/material";
+import { SnackbarProvider } from "notistack";
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (
@@ -51,14 +52,21 @@ export default function App({ Component, pageProps, router }: AppProps) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <LazyMotion features={domAnimation}>
-            <AnimatePresence mode="wait" initial={true}>
-              <UserContext>
-                <Component {...pageProps} key={router.route} />
-              </UserContext>
-            </AnimatePresence>
+            <UserContext>
+              <SnackbarProvider>
+                <AnimatePresence mode="wait" initial={true}>
+                  <Component {...pageProps} key={router.route} />
+                </AnimatePresence>
+              </SnackbarProvider>
+            </UserContext>
           </LazyMotion>
         </ThemeProvider>
       </RecoilRoot>
+      <Script
+        async
+        src="https://w.appzi.io/w.js?token=8XTDR"
+        strategy="afterInteractive"
+      />
     </>
   );
 }

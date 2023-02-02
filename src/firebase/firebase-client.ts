@@ -2,8 +2,8 @@ import { initializeApp } from "firebase/app";
 import {
   collection as fbcollection,
   doc as fbdoc,
-  DocumentData,
-  DocumentReference,
+  type DocumentData,
+  type DocumentReference,
   getDoc,
   getDocs,
   getFirestore,

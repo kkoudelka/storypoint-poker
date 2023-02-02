@@ -6,9 +6,8 @@ import { BoardData } from "@/src/types/board.type";
 import LoadingButton from "@mui/lab/LoadingButton";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import TextField from "@mui/material/TextField";
-import { useForm, UseFormHandleSubmit } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Box from "@mui/material/Box";
-import theme from "@/src/config/theme";
 import { userAtom } from "@/src/atoms/user-atom";
 import { useRecoilValue } from "recoil";
 

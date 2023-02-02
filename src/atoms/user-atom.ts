@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import { IUser } from "../types/board.type";
+import { type IUser } from "../types/board.type";
 
 const { persistAtom } = recoilPersist({ key: "user-storypoints" });
 

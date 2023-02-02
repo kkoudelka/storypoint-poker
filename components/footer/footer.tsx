@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import React from "react";
 import getConfig from "next/config";
-import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 
 const Footer: React.FC = () => {

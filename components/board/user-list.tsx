@@ -1,4 +1,4 @@
-import { BoardData } from "@/src/types/board.type";
+import { type BoardData } from "@/src/types/board.type";
 import Card from "@mui/material/Card";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -17,8 +17,7 @@ import { useRecoilValue } from "recoil";
 import { userAtom } from "@/src/atoms/user-atom";
 import AddModeratorIcon from "@mui/icons-material/AddModerator";
 import Tooltip from "@mui/material/Tooltip";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { DocumentReference, updateDoc } from "firebase/firestore";
+import { type DocumentReference, updateDoc } from "firebase/firestore";
 
 interface IProps {
   data?: BoardData;

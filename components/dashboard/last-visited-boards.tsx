@@ -10,7 +10,6 @@ import { useRecoilState } from "recoil";
 import DeleteIcon from "@mui/icons-material/Delete";
 import dayjs from "dayjs";
 import ListItemButton from "@mui/material/ListItemButton";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const LastVisitedBoards: React.FC = () => {
