@@ -26,13 +26,16 @@ const Chart: React.FC<IProps> = ({ votes }) => {
 
   return (
     <Box
-      sx={{
+      sx={(theme) => ({
         position: "relative",
         display: "flex",
         justifyContent: "center",
         height: 480,
         overflow: "hidden",
-      }}
+        [theme.breakpoints.down("md")]: {
+          height: 300,
+        },
+      })}
     >
       <VictoryPie
         data={groupped}

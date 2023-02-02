@@ -1,58 +1,54 @@
-import React, { useState } from "react";
+import React from "react";
 import type { NextPage } from "next/types";
 import Container from "@mui/material/Container";
 import Layout from "@/components/layout/layout";
 import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
-import { v4 as uuidv4 } from "uuid";
-import { doc, setDoc } from "@/src/firebase/firebase-client";
-import { useRouter } from "next/router";
-import { BoardData } from "@/src/types/board.type";
 import Head from "next/head";
-import LoadingButton from "@mui/lab/LoadingButton";
+import CreateBoard from "@/components/dashboard/create-board";
+import Grid from "@mui/material/Grid";
+import { appName } from "@/src/utils";
+import Typography from "@mui/material/Typography";
+import DynamicLastVisited from "@/components/dashboard/last-visited-dynamic";
 
 const Index: NextPage = () => {
-  const router = useRouter();
-
-  const [isCreating, setIsCreating] = useState(false);
-
-  const createNewGame = async () => {
-    setIsCreating(true);
-    const docId = uuidv4();
-    const docRef = doc("boards", docId);
-    const newGameData: BoardData = {
-      users: [],
-      votes: [],
-      created: new Date(),
-      showResults: false,
-    };
-
-    try {
-      await setDoc(docRef, newGameData);
-      router.push(`/board/${docId}`);
-    } catch (e) {
-      console.log(e);
-      setIsCreating(false);
-    }
-  };
-
   return (
     <Layout>
       <Head>
-        <title>Alza Storypoint Poker</title>
+        <title>{appName}</title>
       </Head>
       <Container maxWidth="xl">
-        <Card sx={(theme) => ({ p: theme.spacing(4) })}>
-          <LoadingButton
-            loading={isCreating}
-            loadingPosition="start"
-            variant="contained"
-            onClick={createNewGame}
-            disabled={isCreating}
-          >
-            New board
-          </LoadingButton>
-        </Card>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={(theme) => ({
+                p: theme.spacing(4),
+                display: "flex",
+                flexDirection: "column",
+                gap: theme.spacing(2),
+              })}
+            >
+              <Typography variant="h5" component="h1">
+                Create new board
+              </Typography>
+              <CreateBoard />
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={(theme) => ({
+                p: theme.spacing(4),
+                display: "flex",
+                flexDirection: "column",
+                gap: theme.spacing(2),
+              })}
+            >
+              <Typography variant="h5" component="h1">
+                Your past boards
+              </Typography>
+              <DynamicLastVisited />
+            </Card>
+          </Grid>
+        </Grid>
       </Container>
     </Layout>
   );

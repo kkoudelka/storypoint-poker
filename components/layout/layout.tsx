@@ -6,13 +6,12 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { m } from "framer-motion";
-import { userNameAtom } from "@/src/atoms/name";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { goBackAtom } from "@/src/atoms/goBack";
+import Footer from "../footer/footer";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
-  const userName = useRecoilValue(userNameAtom);
   const [, setGoBack] = useRecoilState(goBackAtom);
   const router = useRouter();
 
@@ -30,9 +29,17 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed">
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Link href="/">Alza Storypoint Poker</Link>
-            </Typography>
+            <Box sx={{ mr: "auto" }}>
+              <Link href="/">
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{ textDecoration: "none", color: "white" }}
+                >
+                  Alza Storypoint Poker
+                </Typography>
+              </Link>
+            </Box>
             <Button color="inherit" onClick={handleGoToChangeName}>
               {"Change username"}
             </Button>
@@ -46,8 +53,16 @@ const Layout: React.FC<PropsWithChildren> = ({ children }) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
       >
-        <Box sx={(theme) => ({ mt: theme.spacing(2) })}>
+        <Box
+          sx={(theme) => ({
+            mt: theme.spacing(2),
+            [theme.breakpoints.down("md")]: {
+              pb: theme.spacing(2),
+            },
+          })}
+        >
           <main>{children}</main>
+          <Footer />
         </Box>
       </m.div>
     </>

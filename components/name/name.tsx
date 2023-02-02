@@ -6,12 +6,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { useRecoilState } from "recoil";
-import { userNameAtom } from "@/src/atoms/name";
 import { useRouter } from "next/router";
 import { goBackAtom } from "@/src/atoms/goBack";
+import { userAtom } from "@/src/atoms/user-atom";
 
 const NameChanger: React.FC = () => {
-  const [userName, setUserName] = useRecoilState(userNameAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   const [goBackUrl, setGoBack] = useRecoilState(goBackAtom);
 
   const router = useRouter();
@@ -23,12 +23,13 @@ const NameChanger: React.FC = () => {
   } = useForm<{ name: string }>({
     mode: "onChange",
     defaultValues: {
-      name: userName ?? "",
+      name: user?.name ?? "",
     },
   });
 
   const onSubmit = (data: { name: string }) => {
-    setUserName(data.name);
+    setUser((current) => ({ ...current, name: data.name }));
+
     if (goBackUrl) {
       router.push(goBackUrl);
       setGoBack(null);
@@ -59,13 +60,15 @@ const NameChanger: React.FC = () => {
             fullWidth
             placeholder="Alzák Péter"
             color="primary"
+            error={!!errors.name?.message}
+            helperText={errors.name?.message ?? null}
             {...register("name", {
               required: true,
               minLength: {
-                value: 3,
-                message: "Name must be at least 3 characters long",
+                value: 2,
+                message: "Name must be at least 2 characters long",
               },
-              validate: (value) => !!value && value.length > 3,
+              validate: (value) => !!value && value.length > 2,
             })}
           />
           <Button

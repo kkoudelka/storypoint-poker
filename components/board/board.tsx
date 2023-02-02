@@ -3,12 +3,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { selectedCardState } from "@/src/atoms/selectedCard";
+import { useRecoilValue } from "recoil";
 import { DocumentReference, getDoc, updateDoc } from "firebase/firestore";
-import { BoardData } from "@/src/types/board.type";
-import { userNameAtom } from "@/src/atoms/name";
+import { BoardData, IVote } from "@/src/types/board.type";
 import options from "@/src/config/options";
+import { userAtom } from "@/src/atoms/user-atom";
 
 interface IProps {
   docRef: DocumentReference<BoardData>;
@@ -17,30 +16,43 @@ interface IProps {
 }
 
 const Board: React.FC<IProps> = ({ docRef, data }) => {
-  const uName = useRecoilValue(userNameAtom);
+  const userVal = useRecoilValue(userAtom);
 
   const updateVote = (value: string) => async () => {
-    if (!uName) return;
+    if (!userVal) return;
+    if (!data || !userVal.uuid) return;
+    const votes = data.votes;
+
+    const filtered = votes.filter((v) => v.userId !== userVal.uuid);
+
+    const self = votes.find((v) => v.userId === userVal.uuid);
+    if (self && self.value === value) {
+      try {
+        await updateDoc<BoardData>(docRef, {
+          votes: filtered,
+          updated: new Date(),
+        });
+      } catch (e) {
+        console.log(e);
+      }
+      return;
+    }
+
+    const updated: IVote[] = [...filtered, { value, userId: userVal.uuid }];
+
     try {
-      if (!data) return;
-      const votes = data.votes;
-      const filtered = votes.filter((v) => v.user !== uName);
-      const updated = [...filtered, { value, user: uName }];
       await updateDoc<BoardData>(docRef, {
         votes: updated,
+        updated: new Date(),
       });
     } catch (e) {
       console.log(e);
     }
   };
 
-  const handleCardClick = (option: string) => () => {
-    updateVote(option);
-  };
-
   const selectedValue = useMemo(
-    () => data?.votes.find((v) => v.user === uName)?.value,
-    [data, uName]
+    () => data?.votes.find((v) => v.userId === userVal?.uuid)?.value,
+    [data, userVal]
   );
 
   return (
@@ -49,7 +61,7 @@ const Board: React.FC<IProps> = ({ docRef, data }) => {
         {options.map((option) => {
           const isSelected = selectedValue === option;
           return (
-            <Grid item xs={2} key={`card-${option}`}>
+            <Grid item xs={3} md={2} key={`card-${option}`}>
               <Card>
                 <CardActionArea
                   sx={(theme) => ({
@@ -61,6 +73,10 @@ const Board: React.FC<IProps> = ({ docRef, data }) => {
                     ...(isSelected && {
                       backgroundColor: theme.palette.primary.dark,
                     }),
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: "2.5rem",
+                      minHeight: "80px",
+                    },
                   })}
                   onClick={updateVote(option)}
                 >
