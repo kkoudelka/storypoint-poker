@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {
-    buildDate: new Date().toISOString(),
     build: process.env.npm_package_version || '0.0.0',
   }
 }
