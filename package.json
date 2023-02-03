@@ -30,8 +30,6 @@
     "react-timer-hook": "^3.0.5",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
-    "socket.io": "^4.5.4",
-    "socket.io-client": "^4.5.4",
     "uuid": "^9.0.0",
     "victory": "^36.6.8"
   },
