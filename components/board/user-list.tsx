@@ -28,7 +28,7 @@ const UserList: React.FC<IProps> = ({ data, docRef }) => {
   const userVal = useRecoilValue(userAtom);
 
   const usersMemorised = useMemo(() => {
-    return data?.users?.sort((a, b) => a.name.localeCompare(b.name));
+    return data?.users?.sort((a, b) => a.name?.localeCompare(b?.name));
   }, [data?.users]);
 
   const isSelfAdmin = useMemo(() => {
