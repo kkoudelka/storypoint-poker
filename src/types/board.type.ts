@@ -7,7 +7,7 @@ export interface BoardData {
   showResults: boolean;
   logs: ILog[];
   admin: string;
-  ticket?: string;
+  ticket?: string | null;
 }
 
 export interface IUser {

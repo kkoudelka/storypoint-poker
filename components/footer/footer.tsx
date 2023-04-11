@@ -12,7 +12,6 @@ const Footer: React.FC = () => {
       sx={(theme) => ({
         position: "absolute",
         bottom: 0,
-        width: "100%",
         padding: theme.spacing(2),
         backgroundColor: theme.palette.background.paper,
       })}

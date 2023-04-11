@@ -40,6 +40,7 @@ const CreateBoard: React.FC = () => {
       showResults: false,
       admin: userVal?.uuid,
       updated: new Date(),
+      ticket: null,
     };
 
     try {

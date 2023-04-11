@@ -31,6 +31,7 @@ import OgMeta from "@/components/meta/og";
 import useBoardNotifications from "@/src/hooks/useNotifications";
 import useAddUserToBoard from "@/src/hooks/useAddUserToBoard";
 import ActionButtons from "@/components/board/actions";
+import TicketDialog from "@/components/board/tickets/dialog";
 
 interface IProps {
   code: string;
@@ -93,19 +94,22 @@ const BoardCode: NextPage<
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography
-                variant="h3"
-                component="h1"
-                sx={(theme) => ({
-                  fontSize: 36,
-                  mr: "auto",
-                  [theme.breakpoints.down("md")]: {
-                    fontSize: 24,
-                  },
-                })}
-              >
-                {docData?.boardTitle}
-              </Typography>
+              <Box sx={{ mr: "auto", display: "flex", gap: 2 }}>
+                <Typography
+                  variant="h3"
+                  component="h1"
+                  sx={(theme) => ({
+                    fontSize: 36,
+
+                    [theme.breakpoints.down("md")]: {
+                      fontSize: 24,
+                    },
+                  })}
+                >
+                  {docData?.ticket ?? "Currently no ticket"}
+                </Typography>
+                <TicketDialog docRef={docRef} data={docData} />
+              </Box>
               <Tooltip title="Copy link to board">
                 <IconButton
                   onClick={() => {

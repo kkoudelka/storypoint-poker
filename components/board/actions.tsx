@@ -35,12 +35,13 @@ const ActionButtons: React.FC<IProps> = ({ docRef, revealed, votes, data }) => {
   };
 
   const reset = async () => {
-    if (votes?.length === 0) return;
+    if (votes?.length === 0 && data?.ticket === null) return;
     try {
       await updateDoc<BoardData>(docRef, {
         showResults: false,
         votes: [],
         updated: new Date(),
+        ticket: null,
       });
     } catch (e) {
       console.log(e);
